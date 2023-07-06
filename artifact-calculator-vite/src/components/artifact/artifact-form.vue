@@ -78,6 +78,7 @@
 import { computed, ref } from 'vue'
 import { Artifact, artifactMains, artifactSubs, artifactSuits, positions } from './artifact.js'
 import artifactApi from '../../api/artifact-api.js'
+import { ElMessage } from 'element-plus'
 
 const artifact = ref(new Artifact())
 
@@ -96,13 +97,16 @@ const filteredSubs = computed(() => {
 const submit = () => {
   artifactApi.createArtifact(artifact.value.convertToDTO())
     .then(response => {
-      const data = response.data
-      if (data.code === 200) {
-        artifact.value.id = data.data.id
-        alert('提交成功')
-      } else {
-        console.log(data.desc)
-      }
+      artifact.value.id = response.data.data.id
+      ElMessage({
+        message: '提交成功',
+        type: 'error'
+      })
+    }).catch(e => {
+      ElMessage({
+        message: e.response.data.message,
+        type: 'error'
+      })
     })
 }
 

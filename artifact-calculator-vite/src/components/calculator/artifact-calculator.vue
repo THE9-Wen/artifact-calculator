@@ -5,6 +5,7 @@ import characters from '../character/character.js'
 import { Artifact, artifactMains, artifactSuits } from '../artifact/artifact.js'
 import weapons from '../weapon/weapon.js'
 import CharacterResult from './character-result.vue'
+import { ElMessage } from 'element-plus'
 
 const character = ref({})
 const artifactSuit = ref('')
@@ -32,13 +33,18 @@ const calculate = () => {
     weapon: weapon.value.key,
     keywords: keywords.value
   }).then(response => {
-    console.log(response)
-    bestSuit.value = response.data.data.artifacts.map(item => new Artifact(item))
-    calculateResult.value.character = response.data.data.character
-    calculateResult.value.basicDamage = response.data.data.basicDamage
-    calculateResult.value.basicReactDamage = response.data.data.basicReactDamage
-    calculateResult.value.critDamage = response.data.data.critDamage
-    calculateResult.value.critReactDamage = response.data.data.critReactDamage
+    const data = response.data
+    bestSuit.value = data.data.artifacts.map(item => new Artifact(item))
+    calculateResult.value.character = data.data.character
+    calculateResult.value.basicDamage = data.data.basicDamage
+    calculateResult.value.basicReactDamage = data.data.basicReactDamage
+    calculateResult.value.critDamage = data.data.critDamage
+    calculateResult.value.critReactDamage = data.data.critReactDamage
+  }).catch(e => {
+    ElMessage({
+      message: e.response.data.message,
+      type: 'error'
+    })
   })
 }
 

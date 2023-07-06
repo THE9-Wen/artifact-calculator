@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_PATH = 'http://192.168.68.138:8080/artifact/'
+const BASE_PATH = 'https://10c4aaad.r7.vip.cpolar.cn/artifact/'
 
 export default {
   getArtifactById (id) {
