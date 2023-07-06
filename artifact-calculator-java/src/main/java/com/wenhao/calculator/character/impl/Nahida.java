@@ -1,25 +1,22 @@
 package com.wenhao.calculator.character.impl;
 
-import com.wenhao.calculator.artifact.enums.Keyword;
-import com.wenhao.calculator.artifact.model.ArtifactSub;
 import com.wenhao.calculator.calculator.Damage;
-import com.wenhao.calculator.calculator.Reaction;
 import com.wenhao.calculator.character.BaseCharacter;
 import com.wenhao.calculator.character.BasicValue;
 import com.wenhao.calculator.weapon.Type;
 import org.springframework.beans.BeanUtils;
 
 /**
- * YeaMiko
+ * Nahida
  *
  * @author: Wenhao Tong
- * @date: 2023/6/19
+ * @date: 2023/7/7
  */
-public class YeaMiko extends BaseCharacter {
+public class Nahida extends BaseCharacter {
 
-    public YeaMiko() {
+    protected Nahida(BasicValue basicValue) {
         super(new BasicValue());
-        basicValue.setHp(10300.0);
+        basicValue.setHp(10287.0);
         basicValue.setAtk(337.0);
         basicValue.setCritDmg(0.5);
         basicValue.setCritRate(0.242);
@@ -28,32 +25,23 @@ public class YeaMiko extends BaseCharacter {
         basicValue.setBonus(0.0);
         basicValue.setMastery(0.0);
         basicValue.setSkillDmg(1.706);
-        basicValue.setName("八重神子");
+        basicValue.setName("纳西妲");
         basicValue.setWeapon(Type.CATALYST);
         BeanUtils.copyProperties(basicValue, this);
     }
 
     @Override
     public void talent() {
-        ArtifactSub sub = new ArtifactSub();
-        sub.setKeyword(Keyword.BONUS);
-        sub.setValue(0.0015 * mastery);
-        this.updateCharacterValue(sub);
+
     }
 
     @Override
     public void setReaction(Damage damage) {
-        damage.setReaction(Reaction.AGGRAVATE);
+
     }
 
     @Override
     public void party() {
-        updateCharacterValue(new ArtifactSub().setKeyword(Keyword.MASTERY).setValue(100.0));
-    }
 
-    @Override
-    public Boolean compareDamage(Damage damage1, Damage damage2) {
-        return 2 * damage1.expectationDamage(false) + damage1.expectationDamage(true)
-                <2 * damage2.expectationDamage(false) + damage2.expectationDamage(true);
     }
 }

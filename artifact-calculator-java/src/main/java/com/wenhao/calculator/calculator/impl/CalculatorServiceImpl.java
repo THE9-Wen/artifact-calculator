@@ -89,7 +89,7 @@ public class CalculatorServiceImpl implements CalculatorService {
 
     private Damage updateIfBetter(Damage damage, BaseCharacter clone, Weapon weapon, Artifact[] equippedArtifacts, List<ArtifactSub> suit, CalculateResultVo calculateResultVo) {
         Damage temp = calculate(clone, weapon, equippedArtifacts, suit);
-        if (damage == null || damage.expectationDamage(true) < temp.expectationDamage(true)) {
+        if (damage == null || clone.compareDamage(damage, temp)) {
             calculateResultVo.setCharacter(clone);
             calculateResultVo.setArtifacts(List.of(equippedArtifacts));
             return temp;

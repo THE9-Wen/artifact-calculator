@@ -129,6 +129,10 @@ public abstract class BaseCharacter implements Cloneable {
 
     public abstract void party();
 
+    public Boolean compareDamage(Damage damage1, Damage damage2) {
+        return damage1.expectationDamage(true) < damage2.expectationDamage(true);
+    }
+
     @Override
     public BaseCharacter clone() {
         // basicValue中的值不会去改变 其他值都是final类型 所以只需要浅拷贝即可
