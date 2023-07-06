@@ -97,7 +97,7 @@ const filteredSubs = computed(() => {
 const submit = () => {
   artifactApi.createArtifact(artifact.value.convertToDTO())
     .then(response => {
-      artifact.value.id = response.data.data.id
+      artifact.value.id = response.data.id
       ElMessage({
         message: '提交成功',
         type: 'error'

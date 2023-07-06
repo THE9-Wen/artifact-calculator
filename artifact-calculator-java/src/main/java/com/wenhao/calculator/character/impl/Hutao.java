@@ -6,6 +6,7 @@ import com.wenhao.calculator.calculator.Damage;
 import com.wenhao.calculator.calculator.Reaction;
 import com.wenhao.calculator.character.BaseCharacter;
 import com.wenhao.calculator.character.BasicValue;
+import com.wenhao.calculator.weapon.Type;
 import org.springframework.beans.BeanUtils;
 
 import static com.wenhao.calculator.artifact.enums.Keyword.HP;
@@ -30,6 +31,7 @@ public class Hutao extends BaseCharacter {
         basicValue.setMastery(0.0);
         basicValue.setSkillDmg(2.426);
         basicValue.setName("胡桃");
+        basicValue.setWeapon(Type.POLEARM);
         BeanUtils.copyProperties(basicValue, this);
     }
 

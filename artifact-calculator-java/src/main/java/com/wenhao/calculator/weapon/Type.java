@@ -1,5 +1,5 @@
 package com.wenhao.calculator.weapon;
 
 public enum Type {
-    COMMON
+    BOW, CATALYST, POLEARM, SWORD, CLAYMORE,
 }

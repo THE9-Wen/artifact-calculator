@@ -6,6 +6,7 @@ import com.wenhao.calculator.calculator.Damage;
 import com.wenhao.calculator.calculator.Reaction;
 import com.wenhao.calculator.character.BaseCharacter;
 import com.wenhao.calculator.character.BasicValue;
+import com.wenhao.calculator.weapon.Type;
 import org.springframework.beans.BeanUtils;
 
 /**
@@ -28,6 +29,7 @@ public class YeaMiko extends BaseCharacter {
         basicValue.setMastery(0.0);
         basicValue.setSkillDmg(1.706);
         basicValue.setName("八重神子");
+        basicValue.setWeapon(Type.CATALYST);
         BeanUtils.copyProperties(basicValue, this);
     }
 

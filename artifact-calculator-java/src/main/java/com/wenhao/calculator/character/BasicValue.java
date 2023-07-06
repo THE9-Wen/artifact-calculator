@@ -1,5 +1,6 @@
 package com.wenhao.calculator.character;
 
+import com.wenhao.calculator.weapon.Type;
 import lombok.Data;
 
 /**
@@ -29,6 +30,8 @@ public class BasicValue implements Cloneable {
     private Double skillDmg;
 
     private String name;
+
+    private Type weapon;
 
     @Override
     public BasicValue clone() {

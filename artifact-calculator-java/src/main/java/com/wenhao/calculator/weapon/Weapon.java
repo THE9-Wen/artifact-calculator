@@ -22,7 +22,7 @@ public enum Weapon {
      * 决斗之枪
      */
     DEATHMATCH(0,
-            Type.COMMON,
+            Type.POLEARM,
             454.0,
             new ArtifactSub().setKeyword(CRIT_RATE).setValue(0.368),
             List.of(new ArtifactSub().setKeyword(ATK).setValue(0.42))),
@@ -31,7 +31,7 @@ public enum Weapon {
      */
     KAGURAS_VERITY(
             1,
-            Type.COMMON,
+            Type.CATALYST,
             608.0,
             new ArtifactSub().setKeyword(CRIT_DMG).setValue(0.662),
             List.of(new ArtifactSub().setKeyword(BONUS).setValue(0.12),

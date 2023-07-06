@@ -4,6 +4,7 @@ import com.wenhao.calculator.artifact.model.Artifact;
 import com.wenhao.calculator.artifact.model.ArtifactSub;
 import com.wenhao.calculator.calculator.Damage;
 import com.wenhao.calculator.calculator.Reaction;
+import com.wenhao.calculator.common.exceptions.ArtifactException;
 import com.wenhao.calculator.monster.Monster;
 import com.wenhao.calculator.weapon.Weapon;
 import lombok.Data;
@@ -46,6 +47,9 @@ public abstract class BaseCharacter implements Cloneable {
     }
 
     public void equipWeapon(Weapon weapon) {
+        if (this.basicValue.getWeapon() != weapon.getType()) {
+            throw new ArtifactException("错误的武器类型！");
+        }
         basicValue.setAtk(basicValue.getAtk() + weapon.getAtk());
         atk = basicValue.getAtk();
         ArtifactSub main = weapon.getMain();

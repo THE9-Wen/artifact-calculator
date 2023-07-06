@@ -33,13 +33,12 @@ const calculate = () => {
     weapon: weapon.value.key,
     keywords: keywords.value
   }).then(response => {
-    const data = response.data
-    bestSuit.value = data.data.artifacts.map(item => new Artifact(item))
-    calculateResult.value.character = data.data.character
-    calculateResult.value.basicDamage = data.data.basicDamage
-    calculateResult.value.basicReactDamage = data.data.basicReactDamage
-    calculateResult.value.critDamage = data.data.critDamage
-    calculateResult.value.critReactDamage = data.data.critReactDamage
+    bestSuit.value = response.data.artifacts.map(item => new Artifact(item))
+    calculateResult.value.character = response.data.character
+    calculateResult.value.basicDamage = response.data.basicDamage
+    calculateResult.value.basicReactDamage = response.data.basicReactDamage
+    calculateResult.value.critDamage = response.data.critDamage
+    calculateResult.value.critReactDamage = response.data.critReactDamage
   }).catch(e => {
     ElMessage({
       message: e.response.data.message,

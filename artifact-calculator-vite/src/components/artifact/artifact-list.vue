@@ -11,11 +11,8 @@ onMounted(() => listArtifacts())
 
 const listArtifacts = () => {
   artifactApi.listArtifacts().then(response => {
-    if (response.data.code !== 200) {
-      return
-    }
     artifacts.value = []
-    for (const json of response.data.data) {
+    for (const json of response.data) {
       artifacts.value.push(new Artifact(json))
     }
   })

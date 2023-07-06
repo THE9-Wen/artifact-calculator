@@ -2,7 +2,6 @@ package com.wenhao.calculator.artifact;
 
 import com.wenhao.calculator.artifact.enums.Suit;
 import com.wenhao.calculator.artifact.model.Artifact;
-import com.wenhao.calculator.common.Response;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,34 +22,34 @@ public class ArtifactController {
     }
 
     @RequestMapping(value = "/", method = GET)
-    public Response<List<Artifact>> list() {
-        return new Response<>(artifactService.list());
+    public List<Artifact> list() {
+        return artifactService.list();
     }
 
     @RequestMapping(value = "/getSuits", method = GET)
-    public Response<List<Suit>> getSuits() {
-        return new Response<>(artifactService.getSuits());
+    public List<Suit> getSuits() {
+        return artifactService.getSuits();
     }
 
     @RequestMapping(value = "/{id}", method = GET)
-    public Response<Artifact> getById(@PathVariable Long id) {
-        return new Response<>(artifactService.getById(id));
+    public Artifact getById(@PathVariable Long id) {
+        return artifactService.getById(id);
     }
 
     @RequestMapping(value = "/", method = POST, produces = "application/json")
-    public Response<Artifact> createArtifact(@RequestBody Artifact artifact) {
-        return new Response<>(artifactService.createArtifact(artifact));
+    public Artifact createArtifact(@RequestBody Artifact artifact) {
+        return artifactService.createArtifact(artifact);
     }
 
     @RequestMapping(value = "/{id}", method = PUT, produces = "application/json")
-    public Response<Artifact> updateArtifact(@PathVariable Long id ,@RequestBody Artifact artifact) {
+    public Artifact updateArtifact(@PathVariable Long id ,@RequestBody Artifact artifact) {
         artifact.setId(id);
-        return new Response<>(artifactService.updateArtifact(artifact));
+        return artifactService.updateArtifact(artifact);
     }
 
     @RequestMapping(value = "/{id}", method = DELETE)
-    public Response<Boolean> deleteById(@PathVariable Long id) {
+    public Boolean deleteById(@PathVariable Long id) {
         artifactService.deleteArtifact(id);
-        return new Response<>(true);
+        return true;
     }
 }
