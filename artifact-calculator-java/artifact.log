@@ -1,0 +1,6 @@
+2023-06-20T23:15:27.912+08:00  INFO 49830 --- [Test worker] c.w.c.c.i.CalculatorServiceImplTest      : Starting CalculatorServiceImplTest using Java 17.0.7 with PID 49830 (started by wenhao in /Users/wenhao/IdeaProjects/artifact-calculator/artifact-calculator-java)
+2023-06-20T23:15:27.918+08:00  INFO 49830 --- [Test worker] c.w.c.c.i.CalculatorServiceImplTest      : No active profile set, falling back to 1 default profile: "default"
+2023-06-20T23:15:28.639+08:00  INFO 49830 --- [Test worker] c.w.c.c.i.CalculatorServiceImplTest      : Started CalculatorServiceImplTest in 0.871 seconds (process running for 1.476)
+2023-06-20T23:17:41.877+08:00  INFO 50008 --- [Test worker] c.w.c.c.i.CalculatorServiceImplTest      : Starting CalculatorServiceImplTest using Java 17.0.7 with PID 50008 (started by wenhao in /Users/wenhao/IdeaProjects/artifact-calculator/artifact-calculator-java)
+2023-06-20T23:17:41.882+08:00  INFO 50008 --- [Test worker] c.w.c.c.i.CalculatorServiceImplTest      : No active profile set, falling back to 1 default profile: "default"
+2023-06-20T23:17:42.557+08:00  INFO 50008 --- [Test worker] c.w.c.c.i.CalculatorServiceImplTest      : Started CalculatorServiceImplTest in 0.82 seconds (process running for 1.593)
