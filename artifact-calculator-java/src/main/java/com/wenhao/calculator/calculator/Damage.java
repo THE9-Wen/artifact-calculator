@@ -50,6 +50,9 @@ public class Damage {
     }
 
     public Double expectationDamage(Boolean react) {
+        if (critRate > 1) {
+            return critDamage(react);
+        }
         return critDamage(react) * critRate + basicDamage(react) * (1 - critRate);
     }
 }

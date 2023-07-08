@@ -1,15 +1,22 @@
 package com.wenhao.calculator.calculator;
 
+import com.alibaba.excel.EasyExcel;
 import com.wenhao.calculator.calculator.dto.CalculateDto;
 import com.wenhao.calculator.calculator.dto.DoubleSuitDto;
 import com.wenhao.calculator.calculator.dto.SuitDto;
 import com.wenhao.calculator.calculator.vo.CalculateResultVo;
 import com.wenhao.calculator.calculator.vo.CalculateVo;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
@@ -54,5 +61,15 @@ public class CalculatorController {
                         doubleSuitDto.getWeapon(),
                         doubleSuitDto.getKeywords(),
                         doubleSuitDto.getName());
+    }
+
+    @RequestMapping(value = "getExcel", method = GET)
+    private void getExcel(HttpServletResponse response) throws IOException {
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+
+        String fileName = URLEncoder.encode("伤害计算表格", StandardCharsets.UTF_8).replaceAll("\\+", "%20");
+        response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+        EasyExcel.write(response.getOutputStream(), CalculateResultVo.class).sheet("伤害计算表格").doWrite(calculatorService.getExcel());
     }
 }

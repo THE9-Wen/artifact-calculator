@@ -15,4 +15,6 @@ public interface CalculatorService {
     CalculateResultVo selectSuitArtifacts(Suit suit, Weapon weapon, List<Keyword> keywords, String name);
 
     CalculateResultVo selectDoubleSuitArtifacts(Keyword suitKeyword1, Keyword suitKeyword2, Weapon weapon, List<Keyword> keywords, String name);
+
+    List<CalculateResultVo> getExcel();
 }

@@ -18,7 +18,10 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -32,6 +35,8 @@ public class CalculatorServiceImpl implements CalculatorService {
     private static final String CHARACTER_PACKAGE_PATH = "com.wenhao.calculator.character.impl.";
 
     private final ArtifactMapper artifactMapper;
+
+    private List<CalculateResultVo> resultExcel;
 
     public CalculatorServiceImpl(ArtifactMapper artifactMapper) {
         this.artifactMapper = artifactMapper;
@@ -71,34 +76,22 @@ public class CalculatorServiceImpl implements CalculatorService {
             }
         });
 
-        var ref = new Object() {
-            Damage damage = null;
-        };
-        CalculateResultVo calculateResultVo = new CalculateResultVo();
-        equipArtifacts(suits, suits, singles, equippedArtifacts ->
-                ref.damage = updateIfBetter(ref.damage, character.clone(), weapon, equippedArtifacts, suit.getSubs(), calculateResultVo));
-        if (ref.damage == null) {
+        resultExcel = new ArrayList<>();
+        equipArtifacts(suits, suits, singles, equippedArtifacts -> {
+            BaseCharacter clone = character.clone();
+            Damage damage = calculate(clone, weapon, equippedArtifacts, suit.getSubs());
+            CalculateResultVo result = new CalculateResultVo(damage, equippedArtifacts, clone);
+            resultExcel.add(result);
+        });
+        if (resultExcel.isEmpty()) {
             throw new ArtifactException("无法凑齐四件套");
         }
-        calculateResultVo.setBasicDamage(ref.damage.basicDamage(false));
-        calculateResultVo.setCritDamage(ref.damage.critDamage(false));
-        calculateResultVo.setCritReactDamage(ref.damage.critDamage(true));
-        calculateResultVo.setBasicReactDamage(ref.damage.basicDamage(true));
-        return calculateResultVo;
-    }
-
-    private Damage updateIfBetter(Damage damage, BaseCharacter clone, Weapon weapon, Artifact[] equippedArtifacts, List<ArtifactSub> suit, CalculateResultVo calculateResultVo) {
-        Damage temp = calculate(clone, weapon, equippedArtifacts, suit);
-        if (damage == null || clone.compareDamage(damage, temp)) {
-            calculateResultVo.setCharacter(clone);
-            calculateResultVo.setArtifacts(List.of(equippedArtifacts));
-            return temp;
-        }
-        return damage;
+        resultExcel = resultExcel.stream().sorted(Comparator.comparingDouble(item -> -item.getExpectationDamage())).toList();
+        return resultExcel.get(0);
     }
 
     @Override
-    public CalculateResultVo selectDoubleSuitArtifacts(Keyword suitKeyword1, Keyword suitKeyword2, Weapon weapon, List<Keyword> keywords,  String name) {
+    public CalculateResultVo selectDoubleSuitArtifacts(Keyword suitKeyword1, Keyword suitKeyword2, Weapon weapon, List<Keyword> keywords, String name) {
         BaseCharacter character = constructCharacter(name);
         List<Artifact> artifacts = artifactMapper.selectList(new QueryWrapper<>())
                 .stream()
@@ -132,11 +125,7 @@ public class CalculatorServiceImpl implements CalculatorService {
             }
         });
 
-        var ref = new Object() {
-            Damage damage = null;
-        };
-        CalculateResultVo calculateResultVo = new CalculateResultVo();
-
+        resultExcel = new ArrayList<>();
         keywordListHashMap1.forEach((key1, list1) -> {
             if (list1.size() < 2) {
                 return;
@@ -149,43 +138,52 @@ public class CalculatorServiceImpl implements CalculatorService {
                     ArrayList<ArtifactSub> subs = new ArrayList<>();
                     subs.add(list1.get(0).getSuit().getSubs().get(0));
                     subs.add(list2.get(0).getSuit().getSubs().get(0));
-                    ref.damage = updateIfBetter(ref.damage, character.clone(), weapon, equippedArtifacts, subs, calculateResultVo);
+                    BaseCharacter clone = character.clone();
+                    Damage damage = calculate(clone, weapon, equippedArtifacts, subs);
+                    CalculateResultVo result = new CalculateResultVo(damage, equippedArtifacts, clone);
+                    resultExcel.add(result);
                 });
             });
         });
-        if (ref.damage == null) {
-            throw new ArtifactException("无法生成五件圣遗物");
+        if (resultExcel.isEmpty()) {
+            throw new ArtifactException("无法凑齐2+2");
         }
-        calculateResultVo.setBasicDamage(ref.damage.basicDamage(false));
-        calculateResultVo.setCritDamage(ref.damage.critDamage(false));
-        calculateResultVo.setCritReactDamage(ref.damage.critDamage(true));
-        calculateResultVo.setBasicReactDamage(ref.damage.basicDamage(true));
-        return calculateResultVo;
+        resultExcel = resultExcel.stream().sorted(Comparator.comparingDouble(item -> -item.getExpectationDamage())).toList();
+        return resultExcel.get(0);
+    }
+
+    @Override
+    public List<CalculateResultVo> getExcel() {
+        return this.resultExcel;
     }
 
     private void equipArtifacts(List<Artifact> list1, List<Artifact> list2, List<Artifact> singles, Consumer<Artifact[]> consumer) {
         Artifact[] equippedArtifacts = new Artifact[5];
-        list1.forEach(artifact1 -> {
-            if (conflictPosition(equippedArtifacts, artifact1)) return;
-            list1.forEach(artifact2 -> {
-                if (conflictPosition(equippedArtifacts, artifact2)) return;
-                list2.forEach(artifact3 -> {
-                    if (conflictPosition(equippedArtifacts, artifact3)) return;
-                    list2.forEach(artifact4 -> {
-                        if (conflictPosition(equippedArtifacts, artifact4)) return;
-                        singles.forEach(artifact5 -> {
-                            if (conflictPosition(equippedArtifacts, artifact5)) return;
+        for (int i = 0; i < list1.size(); i++) {
+            Artifact artifact1 = list1.get(i);
+            if (conflictPosition(equippedArtifacts, artifact1)) continue;
+            for (int j = i; j < list1.size(); j++) {
+                Artifact artifact2 = list1.get(j);
+                if (conflictPosition(equippedArtifacts, artifact2)) continue;
+                for (int m = list1 == list2 ? j : 0; m < list2.size(); m++) {
+                    Artifact artifact3 = list2.get(m);
+                    if (conflictPosition(equippedArtifacts, artifact3)) continue;
+                    for (int n = m; n < list2.size(); n++) {
+                        Artifact artifact4 = list2.get(n);
+                        if (conflictPosition(equippedArtifacts, artifact4)) continue;
+                        for (Artifact artifact5 : singles) {
+                            if (conflictPosition(equippedArtifacts, artifact5)) continue;
                             consumer.accept(equippedArtifacts);
                             removeArtifact(equippedArtifacts, artifact5);
-                        });
+                        }
                         removeArtifact(equippedArtifacts, artifact4);
-                    });
+                    }
                     removeArtifact(equippedArtifacts, artifact3);
-                });
+                }
                 removeArtifact(equippedArtifacts, artifact2);
-            });
+            }
             removeArtifact(equippedArtifacts, artifact1);
-        });
+        }
     }
 
     private void removeArtifact(Artifact[] equippedArtifacts, Artifact artifact) {

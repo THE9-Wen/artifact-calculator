@@ -12,8 +12,7 @@ const artifactSuit = ref('')
 const weapon = ref('')
 const keywords = ref([artifactMains[1].keyword, artifactMains[3].keyword])
 
-const bestSuit = ref([])
-const calculateResult = ref({})
+const calculateResult = ref()
 
 const querySearch = (value, cb) => {
   const results = value
@@ -33,18 +32,40 @@ const calculate = () => {
     weapon: weapon.value.key,
     keywords: keywords.value
   }).then(response => {
-    bestSuit.value = response.data.artifacts.map(item => new Artifact(item))
-    calculateResult.value.character = response.data.character
-    calculateResult.value.basicDamage = response.data.basicDamage
-    calculateResult.value.basicReactDamage = response.data.basicReactDamage
-    calculateResult.value.critDamage = response.data.critDamage
-    calculateResult.value.critReactDamage = response.data.critReactDamage
+    calculateResult.value = {}
+    Object.keys(response.data).forEach(key => {
+      if (key === 'artifacts') {
+        calculateResult.value[key] = response.data.artifacts.map(item => new Artifact(item))
+      } else {
+        calculateResult.value[key] = response.data[key]
+      }
+    })
+    calculateResult.value.name = character.value.label
   }).catch(e => {
     ElMessage({
       message: e.response.data.message,
       type: 'error'
     })
   })
+}
+
+const getExcel = () => {
+  calculatorApi.getExcel()
+    .then(response => {
+      const blob = new Blob([response.data], { type: 'application/vnd.ms-excel' })
+      const objectUrl = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = objectUrl
+      link.download = `${character.value.label}-伤害计算表格.xlsx`
+      document.body.appendChild(link)
+      link.click()
+      window.URL.revokeObjectURL(link.href)
+    }).catch(e => {
+      ElMessage({
+        message: e.response.data.message,
+        type: 'error'
+      })
+    })
 }
 
 </script>
@@ -107,31 +128,14 @@ const calculate = () => {
         </el-col>
       </el-form>
     </el-row>
-    <el-row>
+    <el-row v-if="calculateResult">
       <character-result
           :calculate-result="calculateResult"
       ></character-result>
     </el-row>
-    <el-row>
-      <el-col v-for="artifact in bestSuit" :span="6" :key="artifact.id">
-        <el-card class="artifact-card" shadow="hover">
-          <template #header>
-            <div>
-              {{ artifact.suit.label }}
-            </div>
-            <div>{{ artifact.position.label }}</div>
-          </template>
-          <template #default>
-            <div>{{ artifact.main.label }}: {{ artifact.main.value }}</div>
-            <div v-for="sub in artifact.subs" :key="sub.keyword">
-              {{ sub.label }}: {{ sub.value }}
-            </div>
-          </template>
-        </el-card>
-      </el-col>
-    </el-row>
     <div class="button-container">
       <el-button @click="calculate">最佳搭配</el-button>
+      <el-button @click="getExcel">获取计算表格</el-button>
     </div>
   </div>
 </template>
