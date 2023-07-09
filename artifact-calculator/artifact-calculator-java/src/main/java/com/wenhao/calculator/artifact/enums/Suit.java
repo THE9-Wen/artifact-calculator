@@ -7,6 +7,9 @@ import lombok.Getter;
 
 import java.util.List;
 
+import static com.wenhao.calculator.artifact.enums.Keyword.DEFENCE;
+import static com.wenhao.calculator.artifact.enums.Keyword.DENDRO_BONUS;
+
 /**
  * @author wenhao
  */
@@ -96,7 +99,7 @@ public enum Suit {
      * 华馆梦醒形骸记
      */
     HUSK_OF_OPULENT(List.of(
-            new ArtifactSub()
+            new ArtifactSub().setKeyword(DEFENCE).setValue(0.3)
     ), 12),
     /**
      * 海染砗磲
@@ -114,7 +117,7 @@ public enum Suit {
      * 深林的记忆
      */
     DEEPWOOD_MEMORIES(List.of(
-            new ArtifactSub()
+            new ArtifactSub().setKeyword(DENDRO_BONUS).setValue(0.15)
     ), 15),
     /**
      * 饰金之梦
@@ -151,7 +154,7 @@ public enum Suit {
     /**
      * 少女
      */
-    MAIDEN_BELOVED(List.of(new ArtifactSub()), 100),
+    MAIDEN_BELOVED(List.of(new ArtifactSub()), 21),
     ;
 
     private final List<ArtifactSub> subs;

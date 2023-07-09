@@ -1,58 +1,66 @@
 <template>
-  <el-form label-position="right" label-width="100px" :model="artifact">
-    <el-form-item>
-      <template v-slot:label> 圣遗物套装： </template>
-      <el-select v-model="artifact.suit">
-        <el-option
-          v-for="suit in artifactSuits"
-          :key="suit.key"
-          :value="suit.key"
-          :label="suit.label"
-        ></el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item>
-      <template v-slot:label> 圣遗物位置： </template>
-      <el-select v-model="artifact.position" @change="artifact.check()">
-        <el-option
-          v-for="position in positions"
-          :key="position.key"
-          :value="position.key"
-          :label="position.label"
-        ></el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item>
-      <template v-slot:label> 主词条： </template>
-      <el-select v-model="artifact.main" value-key="keyword" @change="artifact.check()">
-        <el-option
-          v-for="artifactMain in filteredMains"
-          :key="artifactMain.keyword"
-          :value="artifactMain"
-          :label="artifactMain.label"
-        ></el-option>
-      </el-select>
-      <el-input disabled :model-value="artifact.main?.value"></el-input>
-    </el-form-item>
-    <el-form-item v-for="(sub, index) in artifact.subs" :key="index">
-      <template v-slot:label> 副词条{{ index }}： </template>
-      <el-select v-model="artifact.subs[index]" value-key="keyword" @change="artifact.check()">
-        <el-option
-          v-for="artifactSub in filteredSubs"
-          :key="artifactSub.keyword"
-          :value="artifactSub"
-          :label="artifactSub.label"
-        ></el-option>
-      </el-select>
-      <el-input v-if="Artifact.isKeywordAbs(sub.keyword)" label="值" v-model="sub.value"></el-input>
-      <el-input v-else v-model="sub.value">
-        <template #append>%</template>
-      </el-input>
-    </el-form-item>
-  </el-form>
-  <el-button class="submit-button" @click="submit">提交</el-button>
-  <el-button class="submit-button" @click="clear">清空副词条</el-button>
-  <el-button class="submit-button" v-if="artifact.id" @click="update">更新</el-button>
+  <div class="artifact-form">
+    <el-form label-position="right" label-width="100px" :model="artifact">
+      <el-form-item>
+        <template v-slot:label> 圣遗物套装： </template>
+        <el-select v-model="artifact.suit">
+          <el-option
+            v-for="suit in artifactSuits"
+            :key="suit.key"
+            :value="suit.key"
+            :label="suit.label"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <template v-slot:label> 圣遗物位置： </template>
+        <el-select v-model="artifact.position" @change="artifact.check()">
+          <el-option
+            v-for="position in positions"
+            :key="position.key"
+            :value="position.key"
+            :label="position.label"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <template v-slot:label> 主词条： </template>
+        <el-select v-model="artifact.main" value-key="keyword" @change="artifact.check()">
+          <el-option
+            v-for="artifactMain in filteredMains"
+            :key="artifactMain.keyword"
+            :value="artifactMain"
+            :label="artifactMain.label"
+          ></el-option>
+        </el-select>
+        <el-input disabled :model-value="artifact.main?.value"></el-input>
+      </el-form-item>
+      <el-form-item v-for="(sub, index) in artifact.subs" :key="index">
+        <template v-slot:label> 副词条{{ index }}： </template>
+        <el-select v-model="artifact.subs[index]" value-key="keyword" @change="artifact.check()">
+          <el-option
+            v-for="artifactSub in filteredSubs"
+            :key="artifactSub.keyword"
+            :value="artifactSub"
+            :label="artifactSub.label"
+          ></el-option>
+        </el-select>
+        <el-input
+          v-if="Artifact.isKeywordAbs(sub.keyword)"
+          label="值"
+          v-model="sub.value"
+        ></el-input>
+        <el-input v-else v-model="sub.value">
+          <template #append>%</template>
+        </el-input>
+      </el-form-item>
+    </el-form>
+    <div>
+      <el-button class="submit-button" @click="submit">提交</el-button>
+      <el-button class="submit-button" @click="clear">清空副词条</el-button>
+      <el-button class="submit-button" v-if="artifact.id" @click="update">更新</el-button>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -82,7 +90,7 @@ const submit = () => {
       artifact.value.id = response.data.id
       ElMessage({
         message: '提交成功',
-        type: 'error'
+        type: 'success'
       })
     })
     .catch((e) => {
@@ -109,7 +117,6 @@ const update = () => {
 .submit-button {
   margin-left: 100px;
 }
-
 .el-input {
   margin-left: 20px;
   width: 200px;

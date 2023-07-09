@@ -1,3 +1,30 @@
 .el-form {
-    width: 100%;
+  display: inline-block;
+}
+.el-row {
+  width: 100%;
+  text-align: left;
+  justify-content: center;
+}
+.el-pagination {
+  justify-content: center;
+}
+.artifact-card {
+  height: 225px;
+  width: calc(20% - 22px);
+  min-width: 205px;
+  margin: 10px 10px 10px 10px;
+}
+.el-col {
+  margin-bottom: 20px;
+}
+.artifact-form {
+  text-align: center;
+}
+.el-autocomplete {
+  width: 100%;
+}
+.button-container {
+  width: 100%;
+  text-align: center;
 }

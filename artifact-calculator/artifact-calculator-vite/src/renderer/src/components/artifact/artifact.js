@@ -279,5 +279,5 @@ export const artifactSuits = [
   { label: '乐园遗落之花', key: 18, keyword: 2 },
   { label: '水仙之梦', key: 19, keyword: 14 },
   { label: '花海甘露之光', key: 20, keyword: 6 },
-  { label: '被怜爱的少女', key: 100, keyword: 10 }
+  { label: '被怜爱的少女', key: 21, keyword: 10 }
 ]
