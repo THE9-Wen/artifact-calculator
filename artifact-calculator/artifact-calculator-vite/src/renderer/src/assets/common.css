@@ -12,7 +12,7 @@
 .artifact-card {
   height: 225px;
   width: calc(20% - 22px);
-  min-width: 205px;
+  min-width: 204px;
   margin: 10px 10px 10px 10px;
 }
 .el-col {

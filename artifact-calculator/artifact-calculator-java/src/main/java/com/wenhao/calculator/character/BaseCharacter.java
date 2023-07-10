@@ -3,7 +3,6 @@ package com.wenhao.calculator.character;
 import com.wenhao.calculator.artifact.model.Artifact;
 import com.wenhao.calculator.artifact.model.ArtifactSub;
 import com.wenhao.calculator.calculator.Damage;
-import com.wenhao.calculator.calculator.Reaction;
 import com.wenhao.calculator.common.exceptions.ArtifactException;
 import com.wenhao.calculator.monster.Monster;
 import com.wenhao.calculator.weapon.Weapon;
@@ -41,7 +40,7 @@ public abstract class BaseCharacter implements Cloneable {
 
     protected Double mastery;
 
-    protected BaseCharacter(BasicValue basicValue) {
+    public BaseCharacter(BasicValue basicValue) {
         this.basicValue = basicValue;
         this.level = 89;
     }
@@ -92,7 +91,8 @@ public abstract class BaseCharacter implements Cloneable {
     }
 
     public Double basicDamage() {
-        return atk * basicValue.getSkillDmg();
+        Double[] skillDmg = basicValue.getSkillDmg();
+        return atk * skillDmg[0] + mastery * skillDmg[1] + hp * skillDmg[2] + defence * skillDmg[3];
     }
 
     public void equipArtifact(Artifact artifact) {
@@ -116,11 +116,11 @@ public abstract class BaseCharacter implements Cloneable {
 
     public Damage hit(Monster monster) {
         Damage damage = new Damage();
-        talent();
         party();
-        damage.setBasicDmg(basicDamage() * levelResist(monster) * elementResist(monster) * (bonus + 1.0));
+        talent();
+        damage.setBasicDmg(basicDamage());
+        damage.setBasicFactor(levelResist(monster) * elementResist(monster) * (bonus + 1.0));
         damage.setCritDmg(critDmg);
-        damage.setReaction(Reaction.AGGRAVATE);
         damage.setCritRate(critRate);
         damage.setMastery(mastery);
         setReaction(damage);
@@ -128,10 +128,6 @@ public abstract class BaseCharacter implements Cloneable {
     }
 
     public abstract void party();
-
-    public Boolean compareDamage(Damage damage1, Damage damage2) {
-        return damage1.expectationDamage(true) < damage2.expectationDamage(true);
-    }
 
     @Override
     public BaseCharacter clone() {

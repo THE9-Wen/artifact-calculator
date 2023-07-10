@@ -27,7 +27,10 @@ public class BasicValue implements Cloneable {
 
     private Double mastery;
 
-    private Double skillDmg;
+    /**
+     * 攻击倍率 精通倍率 生命倍率 防御倍率
+     */
+    private final Double[] skillDmg = new Double[4];
 
     private String name;
 
@@ -40,5 +43,23 @@ public class BasicValue implements Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }
+    }
+
+    public Double[] getSkillDmg() {
+        return skillDmg;
+    }
+
+    public void setSkillDmg(Double atkMagnification) {
+        this.skillDmg[0] = atkMagnification;
+        this.skillDmg[1] = 0.0;
+        this.skillDmg[2] = 0.0;
+        this.skillDmg[3] = 0.0;
+    }
+
+    public void setSkillDmg(Double atkMagnification, Double masteryMagnification, Double hpMagnification, Double defenceMagnification) {
+        this.skillDmg[0] = atkMagnification;
+        this.skillDmg[1] = masteryMagnification;
+        this.skillDmg[2] = hpMagnification;
+        this.skillDmg[3] = defenceMagnification;
     }
 }

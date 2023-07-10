@@ -24,4 +24,5 @@ dist-ssr
 *.sw?
 
 #Electron-builder output
-/dist_electron
+/dist_electron!/src/renderer/src/components/calculator/character-result.vue
+!/src/renderer/src/components/calculator/character-result.vue

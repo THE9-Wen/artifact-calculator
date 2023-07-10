@@ -227,7 +227,9 @@ public class CalculatorServiceImpl implements CalculatorService {
             character.equipArtifact(artifact);
         }
         suit.forEach(character::updateCharacterValue);
-        return character.hit(new Monster());
+        Monster monster = new Monster();
+        suit.forEach(monster::updateResist);
+        return character.hit(monster);
     }
 
 }

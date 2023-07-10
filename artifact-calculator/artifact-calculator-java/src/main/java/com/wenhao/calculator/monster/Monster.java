@@ -1,5 +1,6 @@
 package com.wenhao.calculator.monster;
 
+import com.wenhao.calculator.artifact.model.ArtifactSub;
 import lombok.Data;
 
 /**
@@ -22,5 +23,11 @@ public class Monster {
     public Monster(Integer level, Double resist) {
         this.level = level;
         this.resist = resist;
+    }
+
+    public void updateResist(ArtifactSub artifactSub) {
+        if (artifactSub.getKeyword().isReduction()) {
+            this.resist += artifactSub.getValue();
+        }
     }
 }

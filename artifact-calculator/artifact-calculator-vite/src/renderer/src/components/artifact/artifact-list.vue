@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import artifactApi from '../../api/artifact-api.js'
 import { Artifact, artifactMains, artifactSuits } from './artifact.js'
 
@@ -20,7 +20,6 @@ const listArtifacts = () => {
     for (const json of response.data) {
       artifacts.value.push(new Artifact(json))
     }
-    updatePageContent()
   })
 }
 
@@ -39,6 +38,13 @@ const filteredArtifacts = computed(() => {
       return true
     })
 })
+
+watch(
+  filteredArtifacts,
+  () => {
+    updatePageContent()
+  }
+)
 
 const updatePageContent = () => {
   const start = pageSize * (currentPage.value - 1)

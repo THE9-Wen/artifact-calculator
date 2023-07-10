@@ -50,10 +50,4 @@ public class YeaMiko extends BaseCharacter {
     public void party() {
         updateCharacterValue(new ArtifactSub().setKeyword(Keyword.MASTERY).setValue(100.0));
     }
-
-    @Override
-    public Boolean compareDamage(Damage damage1, Damage damage2) {
-        return 2 * damage1.expectationDamage(false) + damage1.expectationDamage(true)
-                <2 * damage2.expectationDamage(false) + damage2.expectationDamage(true);
-    }
 }

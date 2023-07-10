@@ -7,8 +7,7 @@ import lombok.Getter;
 
 import java.util.List;
 
-import static com.wenhao.calculator.artifact.enums.Keyword.DEFENCE;
-import static com.wenhao.calculator.artifact.enums.Keyword.DENDRO_BONUS;
+import static com.wenhao.calculator.artifact.enums.Keyword.*;
 
 /**
  * @author wenhao
@@ -118,6 +117,7 @@ public enum Suit {
      */
     DEEPWOOD_MEMORIES(List.of(
             new ArtifactSub().setKeyword(DENDRO_BONUS).setValue(0.15)
+                    .setKeyword(REDUCTION).setValue(-0.3)
     ), 15),
     /**
      * 饰金之梦

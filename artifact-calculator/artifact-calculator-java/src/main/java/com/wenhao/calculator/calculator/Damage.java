@@ -14,6 +14,8 @@ import static com.wenhao.calculator.calculator.Reaction.NONE;
 public class Damage {
     private Double basicDmg = 0.0;
 
+    private Double basicFactor = 1.0;
+
     private Double critDmg = 0.0;
 
     private Double critRate = 0.0;
@@ -33,16 +35,17 @@ public class Damage {
         }
         return switch (reaction) {
             case VAPORIZE, MELT -> 1.5 * (1.0 + (2.78 * mastery) / (1400.0 + mastery));
-            case AGGRAVATE, SPREAD -> 1 + 1.15 * 1405.097377 * (1.0 + (5.0 * mastery) / (1200.0 + mastery)) / basicDmg;
+            case AGGRAVATE -> 1 + 1.15 * 1405.097377 * (1.0 + (5.0 * mastery) / (1200.0 + mastery)) / basicDmg;
+            case SPREAD -> 1 + 1.25 * 1405.097377 * (1.0 + (5.0 * mastery) / (1200.0 + mastery)) / basicDmg;
             case NONE -> 1.0;
         };
     }
 
     public Double basicDamage(Boolean react) {
         if (react) {
-            return basicDmg * reactionBonus();
+            return basicDmg * reactionBonus() * basicFactor;
         }
-        return basicDmg;
+        return basicDmg * basicFactor;
     }
 
     public Double critDamage(Boolean react) {

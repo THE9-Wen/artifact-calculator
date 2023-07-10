@@ -90,6 +90,11 @@ public enum Keyword {
      * 岩元素伤害加成
      */
     GEO_BONUS(19),
+
+    /**
+     * 减抗
+     */
+    REDUCTION(-1),
     ;
 
     @JsonValue
@@ -106,5 +111,9 @@ public enum Keyword {
 
     public boolean isBonus() {
         return key >= 10;
+    }
+
+    public boolean isReduction() {
+        return key < 0;
     }
 }

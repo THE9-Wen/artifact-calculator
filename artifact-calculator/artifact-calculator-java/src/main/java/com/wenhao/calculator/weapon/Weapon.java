@@ -5,10 +5,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.wenhao.calculator.artifact.model.ArtifactSub;
 import lombok.Getter;
 
+import java.util.Collections;
 import java.util.List;
 
 import static com.wenhao.calculator.artifact.enums.Keyword.*;
-import static com.wenhao.calculator.artifact.enums.Keyword.BONUS;
+import static com.wenhao.calculator.weapon.Type.CATALYST;
+import static com.wenhao.calculator.weapon.Type.POLEARM;
 
 /**
  * Polearm
@@ -22,7 +24,7 @@ public enum Weapon {
      * 决斗之枪
      */
     DEATHMATCH(0,
-            Type.POLEARM,
+            POLEARM,
             454.0,
             new ArtifactSub().setKeyword(CRIT_RATE).setValue(0.368),
             List.of(new ArtifactSub().setKeyword(ATK).setValue(0.42))),
@@ -31,13 +33,20 @@ public enum Weapon {
      */
     KAGURAS_VERITY(
             1,
-            Type.CATALYST,
-            608.0,
+            CATALYST,
+            608.07,
             new ArtifactSub().setKeyword(CRIT_DMG).setValue(0.662),
             List.of(new ArtifactSub().setKeyword(BONUS).setValue(0.12),
                     new ArtifactSub().setKeyword(BONUS).setValue(0.12),
                     new ArtifactSub().setKeyword(BONUS).setValue(0.12),
                     new ArtifactSub().setKeyword(BONUS).setValue(0.12))),
+    PROTOTYPE_AMBER(
+            2,
+            CATALYST,
+            510.0,
+            new ArtifactSub().setKeyword(HP).setValue(0.413),
+            Collections.emptyList()
+    )
     ;
     @JsonValue
     @EnumValue
