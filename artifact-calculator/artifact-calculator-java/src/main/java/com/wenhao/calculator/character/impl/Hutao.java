@@ -19,13 +19,21 @@ import static com.wenhao.calculator.artifact.enums.Keyword.HP;
  */
 public class Hutao extends BaseCharacter {
 
-    public Hutao() {
+    private static final Float HP_1 = 1210.7164f;
+
+    private static final Float ATK_1 = 8.2859f;
+
+    private static final Float DEFENCE_1 = 68.2062f;
+
+
+    public Hutao(Integer level) {
         super(new BasicValue());
-        basicValue.setHp(15443.0);
-        basicValue.setAtk(106.0);
-        basicValue.setCritDmg(0.884);
+        this.level = level;
+        basicValue.setHp((double) (HP_1 * getGrowth()));
+        basicValue.setAtk((double) (ATK_1 * getGrowth()));
+        basicValue.setDefence((double) (DEFENCE_1 * getGrowth()));
+        basicValue.setCritDmg(0.5 + 0.096 * 4);
         basicValue.setCritRate(0.05);
-        basicValue.setDefence(870.0);
         basicValue.setBonus(0.0);
         basicValue.setCharging(1.0);
         basicValue.setMastery(0.0);

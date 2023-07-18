@@ -17,22 +17,32 @@ import org.springframework.beans.BeanUtils;
  */
 public class Nahida extends BaseCharacter {
 
-    public Nahida() {
+    private static final Float HP_1 = 806.5f;
+
+    private static final Float ATK_1 = 23.27f;
+
+    private static final Float DEFENCE_1 = 49.06f;
+
+    public Nahida(Integer level) {
         super(new BasicValue());
-        basicValue.setHp(10360.0);
-        basicValue.setAtk(296.0);
+        this.level = level;
+        basicValue.setHp((double) (HP_1 * getGrowth()));
+        basicValue.setAtk((double) (ATK_1 * getGrowth()));
+        basicValue.setDefence((double) (DEFENCE_1 * getGrowth()));
+        basicValue.setMastery(28.8 * 4);
         basicValue.setCritDmg(0.5);
         basicValue.setCritRate(0.05);
-        basicValue.setDefence(630.0);
         basicValue.setCharging(1.0);
         basicValue.setBonus(0.0);
-        basicValue.setMastery(115.2);
-        basicValue.setSkillDmg(1.858, 3.715, 0.0, 0.0);
+        basicValue.setSkillDmg(1.8576, 3.7152, 0.0, 0.0);
         basicValue.setName("纳西妲");
         basicValue.setWeapon(Type.CATALYST);
         BeanUtils.copyProperties(basicValue, this);
     }
 
+    /**
+     * 纳西妲实战中无法迟到自己大招提供的精通所以天赋中不考虑
+     */
     @Override
     public void talent() {
         if (mastery - 200.0 < 0) {

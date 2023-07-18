@@ -129,10 +129,11 @@ public enum Keyword {
         if (maxValue == 0) {
             return value;
         }
+        float accurateValue = Math.round(value / maxValue * 1000f) * maxValue;
         if (maxValue < 10) {
-            return Math.round(Math.round(value / maxValue * 1000) * maxValue * 10) / 10000f;
+            return Math.round(accurateValue * 100f) / 100000f;
         } else {
-            return Math.round(Math.round(value / maxValue * 1000) * maxValue / 10) / 100f;
+            return Math.round(accurateValue) / 1000f;
         }
     }
 }

@@ -40,6 +40,10 @@ public abstract class BaseCharacter implements Cloneable {
 
     protected Double mastery;
 
+    protected Float levelMultiplier = 0.0903f;
+
+    protected Float const_80 = 11.943f;
+
     public BaseCharacter(BasicValue basicValue) {
         this.basicValue = basicValue;
         this.level = 89;
@@ -100,6 +104,10 @@ public abstract class BaseCharacter implements Cloneable {
         updateCharacterValue(main);
         List<ArtifactSub> subs = artifact.getSubs();
         subs.forEach(this::updateCharacterValue);
+    }
+
+    protected Float getGrowth() {
+        return levelMultiplier * (level - 80) + const_80;
     }
 
     /**

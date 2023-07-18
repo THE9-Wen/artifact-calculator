@@ -15,7 +15,7 @@ export class Artifact {
     this.subs = json.subs.map((sub) => {
       const result = JSON.parse(JSON.stringify(artifactSubs[sub.keyword]))
       if (Artifact.isKeywordAbs(sub.keyword)) {
-        result.value = sub.value
+        result.value = Math.round(sub.value)
       } else {
         result.value = `${(sub.value * 100).toFixed(1)}%`
       }

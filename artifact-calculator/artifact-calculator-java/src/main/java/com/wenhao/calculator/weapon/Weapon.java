@@ -25,7 +25,7 @@ public enum Weapon {
      */
     DEATHMATCH(0,
             POLEARM,
-            454.0,
+            454.38,
             new ArtifactSub().setKeyword(CRIT_RATE).setValue(0.368),
             List.of(new ArtifactSub().setKeyword(ATK).setValue(0.42))),
     /**
@@ -34,7 +34,7 @@ public enum Weapon {
     KAGURAS_VERITY(
             1,
             CATALYST,
-            608.07,
+            608.11,
             new ArtifactSub().setKeyword(CRIT_DMG).setValue(0.662),
             List.of(new ArtifactSub().setKeyword(BONUS).setValue(0.12),
                     new ArtifactSub().setKeyword(BONUS).setValue(0.12),
@@ -43,7 +43,7 @@ public enum Weapon {
     PROTOTYPE_AMBER(
             2,
             CATALYST,
-            510.0,
+            509.60,
             new ArtifactSub().setKeyword(HP).setValue(0.413),
             Collections.emptyList()
     )

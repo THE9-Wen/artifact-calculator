@@ -16,14 +16,20 @@ import org.springframework.beans.BeanUtils;
  * @date: 2023/6/19
  */
 public class YeaMiko extends BaseCharacter {
+    private static final Float HP_1 = 807.462f;
 
-    public YeaMiko() {
+    private static final Float ATK_1 = 26.4404f;
+
+    private static final Float DEFENCE_1 = 44.2742f;
+
+    public YeaMiko(Integer level) {
         super(new BasicValue());
-        basicValue.setHp(10300.0);
-        basicValue.setAtk(337.0);
+        this.level = level;
+        basicValue.setHp((double) (HP_1 * getGrowth()));
+        basicValue.setAtk((double) (ATK_1 * getGrowth()));
+        basicValue.setDefence((double) (DEFENCE_1 * getGrowth()));
+        basicValue.setCritRate(0.048 * 4 + 0.05);
         basicValue.setCritDmg(0.5);
-        basicValue.setCritRate(0.242);
-        basicValue.setDefence(565.0);
         basicValue.setCharging(1.0);
         basicValue.setBonus(0.0);
         basicValue.setMastery(0.0);

@@ -1,54 +1,33 @@
 package com.wenhao.calculator.character.impl;
 
-import com.wenhao.calculator.artifact.model.Artifact;
 import com.wenhao.calculator.artifact.model.ArtifactSub;
 import com.wenhao.calculator.calculator.Damage;
 import com.wenhao.calculator.monster.Monster;
 import com.wenhao.calculator.weapon.Weapon;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static com.wenhao.calculator.artifact.enums.Keyword.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * 因为只有元素反应的逻辑是复杂的
- * 所以只测试有元素精通和无元素精通的场景
- */
 class HutaoTest {
     @Test
-    void test_hit_without_artifact() {
-        Hutao hutao = new Hutao();
-        hutao.equipWeapon(Weapon.DEATHMATCH);
-        Damage damage = hutao.hit(new Monster());
-        assertEquals(2570.0, damage.basicDamage(false), 5.0);
-        assertEquals(3856.0, damage.basicDamage(true), 5.0);
-        assertEquals(4845.0, damage.critDamage(false), 5.0);
-        assertEquals(7268.0, damage.critDamage(true), 5.0);
-        assertEquals(3522.0, damage.expectationDamage(false), 5.0);
-        assertEquals(5283.0, damage.expectationDamage(true), 5.0);
+    void test_basicValue() {
+        Hutao hutao = new Hutao(89);
+        assertEquals(106, hutao.getAtk(), 1.0);
+        assertEquals(870, hutao.getDefence(), 1.0);
+        assertEquals(15443, hutao.getHp(), 1.0);
     }
 
     @Test
-    void test_hit_with_mastery() {
-        Hutao hutao = new Hutao();
+    void test_hit_without_artifact() {
+        Hutao hutao = new Hutao(89);
         hutao.equipWeapon(Weapon.DEATHMATCH);
-        Artifact artifact = new Artifact();
-        artifact.setMain(new ArtifactSub().setKeyword(MASTERY).setValue(187.0));
-        List<ArtifactSub> artifactSubs = List.of(new ArtifactSub().setKeyword(HP_ABS).setValue(1374.0),
-                new ArtifactSub().setKeyword(CRIT_DMG).setValue(0.07),
-                new ArtifactSub().setKeyword(CRIT_RATE).setValue(0.066),
-                new ArtifactSub().setKeyword(ENERGY_RECHARGE).setValue(0.045));
-        artifact.setSubs(artifactSubs);
-        hutao.equipArtifact(artifact);
-        Damage damage = hutao.hit(new Monster());
-        System.out.println(hutao);
-        assertEquals(2696.0, damage.basicDamage(false), 5.0);
-//        assertEquals(5365.0, damage.basicDamage(true), 5.0);
-//        assertEquals(0.0, damage.critDamage(false), 5.0);
-        assertEquals(10484.0, damage.critDamage(true), 5.0);
-//        assertEquals(0.0, damage.expectationDamage(false), 5.0);
-//        assertEquals(0.0, damage.expectationDamage(true), 5.0);
+        hutao.updateCharacterValue(new ArtifactSub().setKeyword(MASTERY).setValue(187.0f));
+        hutao.updateCharacterValue(new ArtifactSub().setKeyword(ATK_ABS).setValue(16f));
+        hutao.updateCharacterValue(new ArtifactSub().setKeyword(HP).setValue(0.041f));
+        hutao.updateCharacterValue(new ArtifactSub().setKeyword(CRIT_RATE).setValue(0.167f));
+        Damage damage = hutao.hit(new Monster(90, 0.1));
+        assertEquals(0,  damage.critDamage(false) / 5613.0 - 1.0, 0.001);
+        assertEquals(0, damage.critDamage(true) / 11172.0 - 1.0, 0.001);
     }
 }
