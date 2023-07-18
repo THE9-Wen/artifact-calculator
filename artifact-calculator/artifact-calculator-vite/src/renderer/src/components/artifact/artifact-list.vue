@@ -9,18 +9,26 @@ const main = ref()
 const currentPage = ref(1)
 const pageSize = 20
 const pageContent = ref()
+const loading = ref(false)
 
 onMounted(() => {
   listArtifacts()
 })
 
 const listArtifacts = () => {
-  artifactApi.listArtifacts().then((response) => {
-    artifacts.value = []
-    for (const json of response.data) {
-      artifacts.value.push(new Artifact(json))
-    }
-  })
+  artifactApi
+    .listArtifacts()
+    .then((response) => {
+      loading.value = false
+      artifacts.value = []
+      for (const json of response.data) {
+        artifacts.value.push(new Artifact(json))
+      }
+    })
+    .catch(() => {
+      setTimeout(listArtifacts, 200)
+      loading.value = true
+    })
 }
 
 const filteredArtifacts = computed(() => {
@@ -39,12 +47,9 @@ const filteredArtifacts = computed(() => {
     })
 })
 
-watch(
-  filteredArtifacts,
-  () => {
-    updatePageContent()
-  }
-)
+watch(filteredArtifacts, () => {
+  updatePageContent()
+})
 
 const updatePageContent = () => {
   const start = pageSize * (currentPage.value - 1)
@@ -66,7 +71,7 @@ defineExpose({
 </script>
 
 <template>
-  <div>
+  <div v-loading.fullscreen.lock="loading">
     <el-row>
       <el-form>
         <el-form-item>

@@ -46,9 +46,9 @@ public class Hutao extends BaseCharacter {
     @Override
     public void talent() {
         ArtifactSub sub = new ArtifactSub();
-        sub.setKeyword(Keyword.BONUS).setValue(0.33);
+        sub.setKeyword(Keyword.BONUS).setAccurateValue(0.33);
         updateCharacterValue(sub);
-        sub.setKeyword(Keyword.ATK_ABS).setValue(Math.min(basicValue.getAtk() * 4.0, hp * 0.0626));
+        sub.setKeyword(Keyword.ATK_ABS).setAccurateValue(Math.min(basicValue.getAtk() * 4.0, hp * 0.0626));
         updateCharacterValue(sub);
     }
 
@@ -59,6 +59,6 @@ public class Hutao extends BaseCharacter {
 
     @Override
     public void party() {
-        updateCharacterValue(new ArtifactSub().setKeyword(HP).setValue(0.25));
+        updateCharacterValue(new ArtifactSub().setKeyword(HP).setAccurateValue(0.25));
     }
 }

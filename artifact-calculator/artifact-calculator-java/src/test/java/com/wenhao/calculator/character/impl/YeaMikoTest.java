@@ -1,14 +1,9 @@
 package com.wenhao.calculator.character.impl;
 
-import com.wenhao.calculator.artifact.model.Artifact;
-import com.wenhao.calculator.artifact.model.ArtifactSub;
 import com.wenhao.calculator.calculator.Damage;
 import com.wenhao.calculator.monster.Monster;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static com.wenhao.calculator.artifact.enums.Keyword.*;
 import static com.wenhao.calculator.weapon.Weapon.KAGURAS_VERITY;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

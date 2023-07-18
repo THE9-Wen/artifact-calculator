@@ -22,7 +22,7 @@ public class ArtifactSub {
         return this;
     }
 
-    public ArtifactSub setValue(Double value) {
+    public ArtifactSub setAccurateValue(Double value) {
         this.value = value.floatValue();
         return this;
     }

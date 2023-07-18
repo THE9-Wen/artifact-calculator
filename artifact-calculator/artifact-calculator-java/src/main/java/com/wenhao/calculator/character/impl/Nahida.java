@@ -50,8 +50,8 @@ public class Nahida extends BaseCharacter {
         }
         Double talentCritRate = Math.min((mastery - 200.0) * 0.0003, 0.24);
         Double talentBonus = Math.min((mastery - 200.0) * 0.001, 0.8);
-        updateCharacterValue(new ArtifactSub().setKeyword(Keyword.CRIT_RATE).setValue(talentCritRate));
-        updateCharacterValue(new ArtifactSub().setKeyword(Keyword.BONUS).setValue(talentBonus));
+        updateCharacterValue(new ArtifactSub().setKeyword(Keyword.CRIT_RATE).setAccurateValue(talentCritRate));
+        updateCharacterValue(new ArtifactSub().setKeyword(Keyword.BONUS).setAccurateValue(talentBonus));
     }
 
     @Override
@@ -61,6 +61,6 @@ public class Nahida extends BaseCharacter {
 
     @Override
     public void party() {
-        updateCharacterValue(new ArtifactSub().setKeyword(Keyword.MASTERY).setValue(100.0));
+        updateCharacterValue(new ArtifactSub().setKeyword(Keyword.MASTERY).setAccurateValue(100.0));
     }
 }

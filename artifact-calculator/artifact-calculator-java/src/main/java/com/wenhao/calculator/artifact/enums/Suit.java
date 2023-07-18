@@ -18,39 +18,39 @@ public enum Suit {
      * 角斗士的终幕礼
      */
     GLADIATORS_FINALE(List.of(
-            new ArtifactSub().setKeyword(Keyword.ATK).setValue(0.18),
-            new ArtifactSub().setKeyword(Keyword.BONUS).setValue(0.35)
+            new ArtifactSub().setKeyword(Keyword.ATK).setAccurateValue(0.18),
+            new ArtifactSub().setKeyword(Keyword.BONUS).setAccurateValue(0.35)
     ), 0),
     /**
      * 流浪大地的乐团
      */
     WANDERERS_TROUPE(List.of(
-            new ArtifactSub().setKeyword(Keyword.MASTERY).setValue(80.0),
-            new ArtifactSub().setKeyword(Keyword.BONUS).setValue(0.35)
+            new ArtifactSub().setKeyword(Keyword.MASTERY).setAccurateValue(80.0),
+            new ArtifactSub().setKeyword(Keyword.BONUS).setAccurateValue(0.35)
     ), 1),
     /**
      * 昔日宗室之仪
      */
     NOBLESSE_OBLIGE(List.of(
-            new ArtifactSub().setKeyword(Keyword.BONUS).setValue(0.2),
-            new ArtifactSub().setKeyword(Keyword.ATK).setValue(0.2)
+            new ArtifactSub().setKeyword(Keyword.BONUS).setAccurateValue(0.2),
+            new ArtifactSub().setKeyword(Keyword.ATK).setAccurateValue(0.2)
     ), 2),
     /**
      * 魔女
      */
     CRIMSON_WITCH_OF_FLAMES(List.of(
-            new ArtifactSub().setKeyword(Keyword.PYRO_BONUS).setValue(0.15),
-            new ArtifactSub().setKeyword(Keyword.MASTERY).setValue(80.0),
-            new ArtifactSub().setKeyword(Keyword.MASTERY).setValue(40.0),
-            new ArtifactSub().setKeyword(Keyword.MASTERY).setValue(40.0),
-            new ArtifactSub().setKeyword(Keyword.MASTERY).setValue(40.0)
+            new ArtifactSub().setKeyword(Keyword.PYRO_BONUS).setAccurateValue(0.15),
+            new ArtifactSub().setKeyword(Keyword.MASTERY).setAccurateValue(80.0),
+            new ArtifactSub().setKeyword(Keyword.MASTERY).setAccurateValue(40.0),
+            new ArtifactSub().setKeyword(Keyword.MASTERY).setAccurateValue(40.0),
+            new ArtifactSub().setKeyword(Keyword.MASTERY).setAccurateValue(40.0)
     ), 3),
     /**
      * 追忆
      */
     SHIMENAWAS_REMINISCENCE(List.of(
-            new ArtifactSub().setKeyword(Keyword.ATK).setValue(0.18),
-            new ArtifactSub().setKeyword(Keyword.BONUS).setValue(0.5)
+            new ArtifactSub().setKeyword(Keyword.ATK).setAccurateValue(0.18),
+            new ArtifactSub().setKeyword(Keyword.BONUS).setAccurateValue(0.5)
     ), 4),
     /**
      * 翠绿之影
@@ -98,7 +98,7 @@ public enum Suit {
      * 华馆梦醒形骸记
      */
     HUSK_OF_OPULENT(List.of(
-            new ArtifactSub().setKeyword(DEFENCE).setValue(0.3)
+            new ArtifactSub().setKeyword(DEFENCE).setAccurateValue(0.3)
     ), 12),
     /**
      * 海染砗磲
@@ -116,16 +116,16 @@ public enum Suit {
      * 深林的记忆
      */
     DEEPWOOD_MEMORIES(List.of(
-            new ArtifactSub().setKeyword(DENDRO_BONUS).setValue(0.15)
-                    .setKeyword(REDUCTION).setValue(-0.3)
+            new ArtifactSub().setKeyword(DENDRO_BONUS).setAccurateValue(0.15)
+                    .setKeyword(REDUCTION).setAccurateValue(-0.3)
     ), 15),
     /**
      * 饰金之梦
      */
     GILDED_DREAMS(List.of(
-            new ArtifactSub().setKeyword(Keyword.MASTERY).setValue(80.0),
-            new ArtifactSub().setKeyword(Keyword.MASTERY).setValue(80.0),
-            new ArtifactSub().setKeyword(Keyword.MASTERY).setValue(80.0)
+            new ArtifactSub().setKeyword(Keyword.MASTERY).setAccurateValue(80.0),
+            new ArtifactSub().setKeyword(Keyword.MASTERY).setAccurateValue(80.0),
+            new ArtifactSub().setKeyword(Keyword.MASTERY).setAccurateValue(80.0)
     ), 16),
     /**
      * 沙上楼阁史话

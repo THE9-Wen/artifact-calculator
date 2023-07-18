@@ -43,7 +43,7 @@ public class YeaMiko extends BaseCharacter {
     public void talent() {
         ArtifactSub sub = new ArtifactSub();
         sub.setKeyword(Keyword.BONUS);
-        sub.setValue(0.0015 * mastery);
+        sub.setAccurateValue(0.0015 * mastery);
         this.updateCharacterValue(sub);
     }
 
@@ -54,6 +54,6 @@ public class YeaMiko extends BaseCharacter {
 
     @Override
     public void party() {
-        updateCharacterValue(new ArtifactSub().setKeyword(Keyword.MASTERY).setValue(100.0));
+        updateCharacterValue(new ArtifactSub().setKeyword(Keyword.MASTERY).setAccurateValue(100.0));
     }
 }

@@ -1,8 +1,8 @@
 <template>
   <div class="artifact-form">
-    <el-form label-position="right" label-width="100px" :model="artifact">
-      <el-form-item>
-        <template v-slot:label> 圣遗物套装： </template>
+    <el-form ref="artifactForm" label-position="right" label-width="100px" :model="artifact">
+      <el-form-item prop="suit" required>
+        <template #label> 圣遗物套装： </template>
         <el-select v-model="artifact.suit">
           <el-option
             v-for="suit in artifactSuits"
@@ -12,8 +12,8 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item>
-        <template v-slot:label> 圣遗物位置： </template>
+      <el-form-item prop="position" required>
+        <template #label> 圣遗物位置： </template>
         <el-select v-model="artifact.position" @change="artifact.check()">
           <el-option
             v-for="position in positions"
@@ -23,8 +23,8 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item>
-        <template v-slot:label> 主词条： </template>
+      <el-form-item prop="main" required>
+        <template #label> 主词条： </template>
         <el-select v-model="artifact.main" value-key="keyword" @change="artifact.check()">
           <el-option
             v-for="artifactMain in filteredMains"
@@ -35,8 +35,14 @@
         </el-select>
         <el-input disabled :model-value="artifact.main?.value"></el-input>
       </el-form-item>
-      <el-form-item v-for="(sub, index) in artifact.subs" :key="index">
-        <template v-slot:label> 副词条{{ index }}： </template>
+      <el-form-item
+        v-for="(sub, index) in artifact.subs"
+        :key="index"
+        :prop="`subs.${index}`"
+        :rules="subRules"
+        required
+      >
+        <template #label> 副词条{{ index }}： </template>
         <el-select v-model="artifact.subs[index]" value-key="keyword" @change="artifact.check()">
           <el-option
             v-for="artifactSub in filteredSubs"
@@ -47,8 +53,8 @@
         </el-select>
         <el-input
           v-if="Artifact.isKeywordAbs(sub.keyword)"
-          label="值"
           v-model="sub.value"
+          label="值"
         ></el-input>
         <el-input v-else v-model="sub.value">
           <template #append>%</template>
@@ -58,7 +64,7 @@
     <div>
       <el-button class="submit-button" @click="submit">提交</el-button>
       <el-button class="submit-button" @click="clear">清空副词条</el-button>
-      <el-button class="submit-button" v-if="artifact.id" @click="update">更新</el-button>
+      <el-button v-if="artifact.id" class="submit-button" @click="update">更新</el-button>
     </div>
   </div>
 </template>
@@ -83,28 +89,46 @@ const filteredSubs = computed(() => {
   })
 })
 
+const artifactForm = ref(null)
+
 const submit = () => {
-  artifactApi
-    .createArtifact(artifact.value.convertToDTO())
-    .then((response) => {
-      artifact.value.id = response.data.id
-      ElMessage({
-        message: '提交成功',
-        type: 'success'
+  artifactForm.value.validate().then(() => {
+    artifactApi
+      .createArtifact(artifact.value.convertToDTO())
+      .then((response) => {
+        artifact.value.id = response.id
+        ElMessage({
+          message: '提交成功',
+          type: 'success'
+        })
       })
-    })
-    .catch((e) => {
-      ElMessage({
-        message: e.response.data.message,
-        type: 'error'
+      .catch((e) => {
+        ElMessage({
+          message: e.response.message,
+          type: 'error'
+        })
       })
-    })
+  })
 }
+
+const subRules = [
+  {
+    validator: (rule, value, callBack) => {
+      if (!value.keyword && !value.value) {
+        callBack(new Error('artifact sub is required'))
+      } else {
+        callBack()
+      }
+    },
+    trigger: 'blur'
+  }
+]
 
 const clear = () => {
   artifact.value.subs.forEach((item) => {
     item.value = undefined
   })
+  artifactForm.value.clearValidate()
   artifact.value.subs = [{}, {}, {}, {}]
 }
 

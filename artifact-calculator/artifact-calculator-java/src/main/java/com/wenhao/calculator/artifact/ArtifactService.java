@@ -22,4 +22,6 @@ public interface ArtifactService {
     void deleteArtifact(Long id);
 
     List<Suit> getSuits();
+
+    List<Artifact> selectByIds(List<Long> ids);
 }

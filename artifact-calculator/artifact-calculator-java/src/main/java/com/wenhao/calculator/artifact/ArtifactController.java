@@ -52,4 +52,9 @@ public class ArtifactController {
         artifactService.deleteArtifact(id);
         return true;
     }
+
+    @RequestMapping(value = "/selectByIds", method = POST)
+    public List<Artifact> selectByIds(@RequestBody List<Long> ids) {
+        return artifactService.selectByIds(ids);
+    }
 }
