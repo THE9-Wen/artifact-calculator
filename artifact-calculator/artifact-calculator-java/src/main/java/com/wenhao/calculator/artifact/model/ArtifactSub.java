@@ -15,5 +15,15 @@ import lombok.experimental.Accessors;
 public class ArtifactSub {
     private Keyword keyword;
 
-    private Double value;
+    private Float value;
+
+    public ArtifactSub setValue(Float value) {
+        this.value = keyword.getAccurate(value);
+        return this;
+    }
+
+    public ArtifactSub setAccurateValue(Double value) {
+        this.value = value.floatValue();
+        return this;
+    }
 }

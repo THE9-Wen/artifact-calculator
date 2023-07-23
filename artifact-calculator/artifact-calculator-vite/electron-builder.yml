@@ -1,5 +1,6 @@
-appId: com.electron.app
-productName: electron-app
+appId: com.wenhao.app
+productName: artifact-calculator
+icon: './resources/icon.png'
 directories:
   buildResources: build
 files:
@@ -10,7 +11,6 @@ files:
   - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
 asarUnpack:
   - resources/**
-afterSign: build/notarize.js
 win:
   executableName: electron-app
 nsis:

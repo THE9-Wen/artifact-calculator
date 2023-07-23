@@ -203,8 +203,8 @@ public class CalculatorServiceImpl implements CalculatorService {
         BaseCharacter character;
         try {
             Class<?> characterClass = Class.forName(CHARACTER_PACKAGE_PATH + name);
-            Constructor<?> constructor = characterClass.getDeclaredConstructor();
-            Object temp = constructor.newInstance();
+            Constructor<?> constructor = characterClass.getDeclaredConstructor(Integer.class);
+            Object temp = constructor.newInstance(89);
             if (temp instanceof BaseCharacter) {
                 character = (BaseCharacter) temp;
             } else {
@@ -227,7 +227,9 @@ public class CalculatorServiceImpl implements CalculatorService {
             character.equipArtifact(artifact);
         }
         suit.forEach(character::updateCharacterValue);
-        return character.hit(new Monster());
+        Monster monster = new Monster();
+        suit.forEach(monster::updateResist);
+        return character.hit(monster);
     }
 
 }

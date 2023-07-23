@@ -5,10 +5,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.wenhao.calculator.artifact.model.ArtifactSub;
 import lombok.Getter;
 
+import java.util.Collections;
 import java.util.List;
 
 import static com.wenhao.calculator.artifact.enums.Keyword.*;
-import static com.wenhao.calculator.artifact.enums.Keyword.BONUS;
+import static com.wenhao.calculator.weapon.Type.CATALYST;
+import static com.wenhao.calculator.weapon.Type.POLEARM;
 
 /**
  * Polearm
@@ -22,22 +24,29 @@ public enum Weapon {
      * 决斗之枪
      */
     DEATHMATCH(0,
-            Type.POLEARM,
-            454.0,
-            new ArtifactSub().setKeyword(CRIT_RATE).setValue(0.368),
-            List.of(new ArtifactSub().setKeyword(ATK).setValue(0.42))),
+            POLEARM,
+            454.38,
+            new ArtifactSub().setKeyword(CRIT_RATE).setAccurateValue(0.368),
+            List.of(new ArtifactSub().setKeyword(ATK).setAccurateValue(0.42))),
     /**
      * 神乐之真意
      */
     KAGURAS_VERITY(
             1,
-            Type.CATALYST,
-            608.0,
-            new ArtifactSub().setKeyword(CRIT_DMG).setValue(0.662),
-            List.of(new ArtifactSub().setKeyword(BONUS).setValue(0.12),
-                    new ArtifactSub().setKeyword(BONUS).setValue(0.12),
-                    new ArtifactSub().setKeyword(BONUS).setValue(0.12),
-                    new ArtifactSub().setKeyword(BONUS).setValue(0.12))),
+            CATALYST,
+            608.11,
+            new ArtifactSub().setKeyword(CRIT_DMG).setAccurateValue(0.662),
+            List.of(new ArtifactSub().setKeyword(BONUS).setAccurateValue(0.12),
+                    new ArtifactSub().setKeyword(BONUS).setAccurateValue(0.12),
+                    new ArtifactSub().setKeyword(BONUS).setAccurateValue(0.12),
+                    new ArtifactSub().setKeyword(BONUS).setAccurateValue(0.12))),
+    PROTOTYPE_AMBER(
+            2,
+            CATALYST,
+            509.60,
+            new ArtifactSub().setKeyword(HP).setAccurateValue(0.413),
+            Collections.emptyList()
+    )
     ;
     @JsonValue
     @EnumValue

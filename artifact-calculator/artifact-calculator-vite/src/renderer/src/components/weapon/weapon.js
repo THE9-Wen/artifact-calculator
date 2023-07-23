@@ -8,5 +8,10 @@ export default [
     label: '神乐之真意',
     type: 1,
     key: 1
+  },
+  {
+    label: '试做金珀',
+    type: 1,
+    key: 2
   }
 ]

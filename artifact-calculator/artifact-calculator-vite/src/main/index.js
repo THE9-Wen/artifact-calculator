@@ -2,12 +2,13 @@ import { app, shell, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import { killService, startService } from './service-utils'
 
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    width: 1150,
+    height: 770,
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
@@ -49,6 +50,7 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
+  startService()
   createWindow()
 
   app.on('activate', function () {
@@ -64,6 +66,7 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
+    killService()
   }
 })
 

@@ -68,4 +68,11 @@ public class ArtifactServiceImpl implements ArtifactService {
         List<Artifact> artifacts = this.artifactMapper.selectList(suitQueryWrapper);
         return artifacts.stream().map(Artifact::getSuit).distinct().collect(Collectors.toList());
     }
+
+    @Override
+    public List<Artifact> selectByIds(List<Long> ids) {
+        QueryWrapper<Artifact> queryWrapper = new QueryWrapper<>();
+        queryWrapper.in("id", ids);
+        return this.artifactMapper.selectList(queryWrapper);
+    }
 }

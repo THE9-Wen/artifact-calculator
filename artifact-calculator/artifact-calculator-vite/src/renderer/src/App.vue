@@ -8,25 +8,28 @@ import ArtifactCalculatorDoubleSuit from './components/calculator/artifact-calcu
 import { ref } from 'vue'
 
 const artifactListRef = ref(null)
-const clickArtifactList = () => {
-  artifactListRef.value.listArtifacts()
+
+const updateArtifactList = (name) => {
+  if (name === '0') {
+    artifactListRef.value.listArtifacts()
+  }
 }
 </script>
 
 <template>
   <div>
     <calculator-header></calculator-header>
-    <el-tabs>
-      <el-tab-pane label="圣遗物" @click="clickArtifactList">
+    <el-tabs @tab-change="updateArtifactList">
+      <el-tab-pane lazy label="圣遗物">
         <artifact-list ref="artifactListRef"></artifact-list>
       </el-tab-pane>
-      <el-tab-pane label="新增圣遗物">
+      <el-tab-pane lazy label="新增圣遗物">
         <artifact-form></artifact-form>
       </el-tab-pane>
-      <el-tab-pane label="四件套计算器">
+      <el-tab-pane lazy label="四件套计算器">
         <artifact-calculator></artifact-calculator>
       </el-tab-pane>
-      <el-tab-pane label="2+2计算器">
+      <el-tab-pane lazy label="2+2计算器">
         <artifact-calculator-double-suit></artifact-calculator-double-suit>
       </el-tab-pane>
     </el-tabs>
@@ -37,5 +40,8 @@ const clickArtifactList = () => {
 <style scoped>
 :deep(.el-tabs__item) {
   min-width: 200px;
+}
+.el-tab-pane {
+  min-height: calc(100vh - 285px);
 }
 </style>
