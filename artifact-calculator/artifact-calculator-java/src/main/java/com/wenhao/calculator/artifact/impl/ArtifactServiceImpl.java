@@ -7,8 +7,10 @@ import com.wenhao.calculator.artifact.enums.Suit;
 import com.wenhao.calculator.artifact.mapper.ArtifactMapper;
 import com.wenhao.calculator.artifact.model.Artifact;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.client.reactive.JdkHttpClientResourceFactory;
 import org.springframework.stereotype.Service;
 
+import java.net.http.HttpClient;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -74,5 +76,10 @@ public class ArtifactServiceImpl implements ArtifactService {
         QueryWrapper<Artifact> queryWrapper = new QueryWrapper<>();
         queryWrapper.in("id", ids);
         return this.artifactMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public Boolean batchAdd(String uid) {
+        return null;
     }
 }

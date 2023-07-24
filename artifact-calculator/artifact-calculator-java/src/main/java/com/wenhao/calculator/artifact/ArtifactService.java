@@ -24,4 +24,6 @@ public interface ArtifactService {
     List<Suit> getSuits();
 
     List<Artifact> selectByIds(List<Long> ids);
+
+    Boolean batchAdd(String uid);
 }

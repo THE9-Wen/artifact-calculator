@@ -57,4 +57,9 @@ public class ArtifactController {
     public List<Artifact> selectByIds(@RequestBody List<Long> ids) {
         return artifactService.selectByIds(ids);
     }
+
+    @RequestMapping(value = "/batchAdd", method = POST)
+    public Boolean batchAdd(@RequestBody String uid) {
+        return artifactService.batchAdd(uid);
+    }
 }

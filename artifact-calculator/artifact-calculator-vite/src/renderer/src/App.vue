@@ -41,6 +41,7 @@ const updateArtifactList = (name) => {
 :deep(.el-tabs__item) {
   min-width: 200px;
 }
+
 .el-tab-pane {
   min-height: calc(100vh - 285px);
 }
